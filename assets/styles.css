@@ -36,6 +36,15 @@
     background: inherit;
     border: 2px solid;
     font-size: 1.1em;
+    transition: all ease-in 200ms;
+}
+
+.download-button:hover{
+    box-shadow: 0px 0px 5px;
+}
+
+.btn-link:focus {
+    outline: none
 }
 
 .pic-container {

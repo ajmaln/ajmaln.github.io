@@ -1,9 +1,20 @@
 
 
 .skills-container {
-    
+    display: flex;
+    min-width: 600px;
+    margin-block-end: 1em;
+    flex-wrap: wrap;
 }
 
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .skills-container {
+        min-width: 100%;
+    }
+
+}
 
 .skill {
     font-family: monospace;

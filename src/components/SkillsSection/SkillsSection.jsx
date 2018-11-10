@@ -5,37 +5,39 @@ import './styles.css'
 export default (props) =>
     <Section>
         <h1 className='font-cursive center'>Skills</h1>
-        <div className='skills-container center-middle'>
-            {
-                props.skills.languages.map(skill =>
-                    <div className='skill'>
-                        {
-                            skill
-                        }
-                    </div>
-                )
-            }
-        </div>
-        <div className='skills-container center-middle'>
-            {
-                props.skills.fandls.map(skill =>
-                    <div className='skill'>
-                        {
-                            skill
-                        }
-                    </div>
-                )
-            }
-        </div>
-        <div className='skills-container center-middle'>
-            {
-                props.skills.deployment.map(skill =>
-                    <div className='skill'>
-                        {
-                            skill
-                        }
-                    </div>
-                )
-            }
+        <div className='center-middle flex-column'>
+            <div className='skills-container center-middle'>
+                {
+                    props.skills.languages.map(skill =>
+                        <div className='skill'>
+                            {
+                                skill
+                            }
+                        </div>
+                    )
+                }
+            </div>
+            <div className='skills-container center-middle'>
+                {
+                    props.skills.fandls.map(skill =>
+                        <div className='skill'>
+                            {
+                                skill
+                            }
+                        </div>
+                    )
+                }
+            </div>
+            <div className='skills-container center-middle'>
+                {
+                    props.skills.deployment.map(skill =>
+                        <div className='skill'>
+                            {
+                                skill
+                            }
+                        </div>
+                    )
+                }
+            </div>
         </div>
     </Section>

@@ -26,11 +26,23 @@ const User = {
       title: 'Issue Tracking System',
       date: 'April 2018',
       description: 'Developed an Ticket based Issue tracking system using Django Backend for Sophisticated Instrumentation & Computation Center, Kerala University'
+    },
+    {
+      image: 'https://i.imgur.com/uOEhnDE.png',
+      title: 'easyKU',
+      date: 'September 2018',
+      description: 'A web app where you can get results and notifications from Kerala University and subscribe for alerts on new updates. App: https://ajmaln.github.io/easyku/, Repo: https://github.com/ajmaln/easyku'
+    },
+    {
+      image: 'https://i.imgur.com/yqJUkJG.jpg',
+      title: 'Pratiti',
+      date: 'October 2018',
+      description: 'An educational application for medical students. App: https://goo.gl/rEnexn'
     }
   ],
   skills : {
     languages: ['Python', 'Javascript', 'C', 'CPP', 'Java', 'C#', ],
-    fandls : ['Django', 'ReactJS', 'NodeJS', 'Firebase Cloud API', 'Git', 'JQuery', 'Django Rest Framework', 'GraphQL'],
+    fandls : ['Django', 'ReactJS', 'Redux', 'NodeJS', 'Firebase Cloud API', 'Git', 'JQuery', 'Django Rest Framework', 'GraphQL'],
     deployment: ['Heroku', 'PythonAnyWhere', 'Amazon Cloud EC2', 'Firebase']
   }
 };

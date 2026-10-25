@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Page not found · Ajmal Noushad</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700;800&family=Figtree:wght@400;500;600&family=Share+Tech+Mono&display=swap">
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <script>
+    try {
+      var t = localStorage.getItem("theme");
+      if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  </script>
+  <style>
+    .notfound {
+      min-height: 100dvh;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 22px;
+      padding-block: 48px;
+      text-align: center;
+    }
+    .notfound__title {
+      font-family: var(--font-display);
+      font-size: var(--step-3);
+      font-weight: 800;
+      line-height: 1.05;
+      text-wrap: balance;
+    }
+    .notfound .term { width: min(560px, 100%); text-align: left; }
+    .notfound .term__log { height: auto; gap: 10px; }
+  </style>
+</head>
+<body>
+  <main class="notfound wrap">
+    <p class="eyebrow">404</p>
+    <h1 class="notfound__title">This page wandered off.</h1>
+    <div class="term">
+      <div class="term__bar">
+        <span class="term__lights" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="term__title">ajmal-agent</span>
+      </div>
+      <div class="term__log">
+        <div class="msg msg--user"><span class="msg__prompt" aria-hidden="true">❯</span> cd <span data-path>/that-page</span></div>
+        <div class="msg msg--error">cd: no such file or directory</div>
+        <div class="msg msg--sys">I'd rather not make up a page that doesn't exist. The home page is a safer bet.</div>
+      </div>
+    </div>
+    <a class="btn btn--outline" href="/">Back to the home page</a>
+  </main>
+  <script>
+    document.querySelector("[data-path]").textContent = location.pathname;
+  </script>
+</body>
+</html>

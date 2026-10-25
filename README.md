@@ -11,7 +11,8 @@ assets/css/main.css     design tokens (light + dark) and all styles
 assets/js/main.js       theme, nav, ⌘K menu, hero dot field, timeline, cards
 assets/js/agent.js      the scripted "Ask my agent" terminal and its answers
 assets/Ajmal_Noushad_CV.pdf
-assets/img/             photo, icons and the social preview image (og.png)
+assets/img/             photo, app icons and the social preview image (og.png)
+favicon.svg             tab icon; favicon.ico is its 16/32/48px fallback
 service-worker.js       clears the old Create React App service worker for returning visitors
 ```
 

@@ -1,34 +1,17 @@
-/**
- * Welcome to your Workbox-powered service worker!
- *
- * You'll need to register this file in your web app and you should
- * disable HTTP caching for this file too.
- * See https://goo.gl/nhQhGp
- *
- * The rest of the code is auto-generated. Please don't update this file
- * directly; instead, make changes to your Workbox build configuration
- * and re-run your build process.
- * See https://goo.gl/2aRDsh
- */
+// The previous version of this site (a Create React App build) registered a
+// Workbox service worker that precached the old bundle. This replacement
+// clears those caches, unregisters itself and reloads open tabs so returning
+// visitors get the new site instead of the cached one.
+self.addEventListener("install", () => self.skipWaiting());
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
-
-importScripts(
-  "/precache-manifest.5dd84743e91ca08b974d4cf80708ee45.js"
-);
-
-workbox.clientsClaim();
-
-/**
- * The workboxSW.precacheAndRoute() method efficiently caches and responds to
- * requests for URLs in the manifest.
- * See https://goo.gl/S9QRab
- */
-self.__precacheManifest = [].concat(self.__precacheManifest || []);
-workbox.precaching.suppressWarnings();
-workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
-
-workbox.routing.registerNavigationRoute("/index.html", {
-  
-  blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    (async () => {
+      const keys = await caches.keys();
+      await Promise.all(keys.map((key) => caches.delete(key)));
+      await self.registration.unregister();
+      const clients = await self.clients.matchAll({ type: "window" });
+      clients.forEach((client) => client.navigate(client.url));
+    })()
+  );
 });

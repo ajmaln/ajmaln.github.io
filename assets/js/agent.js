@@ -661,6 +661,7 @@ export function initAgent(ctx) {
           "  open github         also: linkedin, resume",
           "  theme [dark|light]  switch the colour theme",
           "  whoami              who's asking?",
+          "  party               you'll see",
           "  clear               clear the conversation",
           "  sudo hire ajmal     you know you want to",
         ].join("\n");
@@ -736,6 +737,12 @@ export function initAgent(ctx) {
         setChips([{ label: "Copy email", action: "copy" }, "What are you working on now?"]);
         return true;
       }
+      case "party":
+      case "confetti":
+      case "celebrate":
+        ctx.party?.();
+        addSys("🎉");
+        return true;
       case "rm":
         addSys("Permission denied: this portfolio is read-only.", "msg msg--error");
         return true;

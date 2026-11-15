@@ -114,6 +114,7 @@
   <main id="main">
     <!-- ───────────────────────── Hero ───────────────────────── -->
     <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__aurora" aria-hidden="true"><i></i><i></i><i></i></div>
       <canvas class="hero__dots" aria-hidden="true"></canvas>
       <div class="hero__inner wrap">
         <a class="status" href="#work-akai" data-hero-step="0">
@@ -132,7 +133,7 @@
           </picture>
         </figure>
 
-        <h1 class="hero__title" id="hero-title" data-hero-step="2">Hello, I'm Ajmal&nbsp;Noushad</h1>
+        <h1 class="hero__title" id="hero-title" data-hero-step="2">Hello, I'm <span class="hero__name">Ajmal&nbsp;Noushad<svg class="hero__squiggle" viewBox="0 0 300 14" preserveAspectRatio="none" aria-hidden="true"><path d="M3 9c40-8 60 6 98 0s58-8 98-1 60 3 98-2" pathLength="1"/></svg></span></h1>
 
         <p class="roles" data-hero-step="3">
           <span class="visually-hidden">Full-stack engineer, AI agent builder, React and Rails developer, open sourcerer.</span>
@@ -146,11 +147,11 @@
         </p>
 
         <div class="hero__ctas" data-hero-step="5">
-          <a class="btn btn--outline" href="assets/Ajmal_Noushad_CV.pdf" download="Ajmal_Noushad_CV.pdf" data-magnetic>
+          <a class="btn btn--solid" href="assets/Ajmal_Noushad_CV.pdf" download="Ajmal_Noushad_CV.pdf" data-magnetic>
             <svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>
             Download resume
           </a>
-          <a class="btn btn--ghost" href="#ask">
+          <a class="btn btn--outline" href="#ask" data-magnetic>
             <svg class="icon" aria-hidden="true"><use href="#i-terminal"/></svg>
             Ask my agent
           </a>
@@ -163,6 +164,22 @@
         </ul>
 
         <p class="hero__hint" data-hero-step="7" data-hint>Tip: press <kbd class="kbd" data-kbd-mod>⌘K</kbd> to jump anywhere</p>
+      </div>
+
+      <div class="marquee" data-marquee aria-hidden="true">
+        <ul class="marquee__track"><li>React</li><li>Next.js</li><li>TypeScript</li><li>Ruby on Rails</li><li>Node.js</li><li>Vercel AI SDK</li><li>Tool calling</li><li>Structured outputs</li><li>Streaming UX</li><li>PostgreSQL</li><li>React Query</li><li>Tailwind CSS</li><li>Storybook</li><li>Chrome extensions</li></ul>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Highlights ───────────────────────── -->
+    <section class="stats" aria-label="Highlights">
+      <div class="wrap">
+        <ul class="stats__grid" data-reveal>
+          <li><a class="stat" href="#experience"><span class="stat__num"><span data-years-since="2018-11" data-count>7</span>+</span><span class="stat__label">years building products</span></a></li>
+          <li><a class="stat" href="#work-neetoform"><span class="stat__num"><span data-count="80">80</span>%</span><span class="stat__label">smaller bundle on NeetoForm</span></a></li>
+          <li><a class="stat" href="#work-soc"><span class="stat__num">&lt;<span data-count="30">30</span>s</span><span class="stat__label">malware response, down from 5 min</span></a></li>
+          <li><a class="stat" href="#work-neetoui"><span class="stat__num">~<span data-count="300">300</span></span><span class="stat__label">lines removed per repo by NeetoCist</span></a></li>
+        </ul>
       </div>
     </section>
 
@@ -597,13 +614,14 @@
     <section class="section section--contact" id="contact" aria-labelledby="contact-title">
       <div class="wrap">
         <div class="contact" data-reveal>
+          <div class="contact__glow" aria-hidden="true"></div>
           <p class="eyebrow">~/contact</p>
           <h2 class="contact__title" id="contact-title">Let's build something together.</h2>
           <p class="section__lede">Hiring for a product or AI role, or need a hand with an agent, a frontend or a Rails app? My inbox is open.</p>
 
           <div class="email">
             <a class="email__addr" href="mailto:ajmalnshd@gmail.com">ajmalnshd@gmail.com</a>
-            <button class="btn btn--outline btn--sm email__copy" type="button" data-copy="ajmalnshd@gmail.com">
+            <button class="btn btn--outline btn--sm email__copy" type="button" data-copy="ajmalnshd@gmail.com" data-magnetic>
               <svg class="icon icon--copy" aria-hidden="true"><use href="#i-copy"/></svg>
               <svg class="icon icon--check" aria-hidden="true"><use href="#i-check"/></svg>
               <span data-copy-label>Copy</span>
@@ -623,6 +641,7 @@
   </main>
 
   <footer class="footer">
+    <p class="footer__sign" aria-hidden="true">ajmal noushad</p>
     <div class="wrap footer__inner">
       <p>© <span data-year>2026</span> Ajmal Noushad</p>
       <p class="footer__built">Hand-built with HTML, CSS and vanilla JS. Press <kbd class="kbd" data-kbd-mod>⌘K</kbd> to explore.</p>

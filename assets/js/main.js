@@ -147,6 +147,10 @@ async function copyText(text) {
 async function copyEmail(button) {
   const ok = await copyText(EMAIL);
   toast(ok ? "Email copied to clipboard" : `Couldn't copy. The address is ${EMAIL}`);
+  if (ok) {
+    const r = button?.getBoundingClientRect();
+    confetti.burst(r ? r.left + r.width / 2 : innerWidth / 2, r ? r.top + r.height / 2 : innerHeight - 80, 60);
+  }
   if (ok && button) {
     const label = $("[data-copy-label]", button);
     button.classList.add("is-copied");
@@ -160,6 +164,123 @@ async function copyEmail(button) {
 
 function initCopy() {
   $$("[data-copy]").forEach((btn) => btn.addEventListener("click", () => copyEmail(btn)));
+}
+
+/* ---------- Confetti ---------- */
+
+const confetti = (() => {
+  let canvas = null;
+  let ctx = null;
+  let parts = [];
+  let raf = 0;
+
+  const size = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    canvas.width = Math.round(innerWidth * dpr);
+    canvas.height = Math.round(innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  const ensure = () => {
+    if (canvas) return;
+    canvas = document.createElement("canvas");
+    canvas.className = "confetti";
+    canvas.setAttribute("aria-hidden", "true");
+    document.body.append(canvas);
+    ctx = canvas.getContext("2d");
+    size();
+    addEventListener("resize", size);
+  };
+  const palette = () => {
+    const cs = getComputedStyle(root);
+    return ["--leaf", "--leaf-2", "--sun", "--ink", "--rec"].map((v) => cs.getPropertyValue(v).trim());
+  };
+
+  const frame = () => {
+    raf = 0;
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    parts = parts.filter((p) => p.life > 0 && p.y < innerHeight + 40);
+    for (const p of parts) {
+      p.vy += 0.3;
+      p.vx *= 0.985;
+      p.vy *= 0.985;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.spin;
+      p.flip += 0.22;
+      p.life -= 1;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.scale(1, Math.cos(p.flip));
+      ctx.globalAlpha = Math.min(1, p.life / 24);
+      ctx.fillStyle = p.color;
+      if (p.round) {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+        ctx.fill();
+      } else ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+    }
+    if (parts.length) raf = requestAnimationFrame(frame);
+  };
+
+  function burst(x, y, count = 70, { angle = -Math.PI / 2, spread = Math.PI * 0.9, power = 12 } = {}) {
+    if (!motionOK()) return;
+    ensure();
+    const colors = palette();
+    for (let i = 0; i < count; i++) {
+      const a = angle + (Math.random() - 0.5) * spread;
+      const v = power * (0.35 + Math.random() * 0.65);
+      parts.push({
+        x,
+        y,
+        vx: Math.cos(a) * v,
+        vy: Math.sin(a) * v,
+        w: 5 + Math.random() * 6,
+        h: 3 + Math.random() * 4,
+        rot: Math.random() * Math.PI,
+        spin: (Math.random() - 0.5) * 0.3,
+        flip: Math.random() * Math.PI,
+        life: 90 + Math.random() * 60,
+        round: Math.random() < 0.25,
+        color: colors[(Math.random() * colors.length) | 0],
+      });
+    }
+    if (!raf) raf = requestAnimationFrame(frame);
+  }
+
+  function party() {
+    if (!motionOK()) {
+      toast("🎉 Party mode (confetti is off because you prefer reduced motion)");
+      return;
+    }
+    toast("🎉 Party mode");
+    burst(0, innerHeight * 0.75, 90, { angle: -Math.PI / 3, spread: 0.9, power: 22 });
+    burst(innerWidth, innerHeight * 0.75, 90, { angle: (-Math.PI * 2) / 3, spread: 0.9, power: 22 });
+    setTimeout(() => burst(innerWidth / 2, innerHeight * 0.6, 110, { spread: Math.PI * 2, power: 16 }), 320);
+  }
+
+  return { burst, party };
+})();
+
+function initKonami() {
+  const code = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"];
+  let at = 0;
+  addEventListener("keydown", (e) => {
+    const key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    at = key === code[at] ? at + 1 : key === code[0] ? 1 : 0;
+    if (at === code.length) {
+      at = 0;
+      confetti.party();
+    }
+  });
+}
+
+function initMarquee() {
+  $$("[data-marquee] .marquee__track").forEach((track) => {
+    // Duplicate the items so the -50% loop is seamless.
+    [...track.children].forEach((li) => track.append(li.cloneNode(true)));
+  });
 }
 
 /* ---------- Navigation ---------- */
@@ -320,7 +441,7 @@ function initDots() {
   const readColors = () => {
     const cs = getComputedStyle(root);
     base = cs.getPropertyValue("--dot").trim();
-    hot = cs.getPropertyValue("--dot-hot").trim();
+    hot = cs.getPropertyValue("--leaf").trim();
   };
 
   function layout() {
@@ -425,12 +546,24 @@ function initDots() {
       pointer.x = e.clientX - rect.left;
       pointer.y = e.clientY - rect.top;
       pointer.active = true;
+      if (e.pointerType === "mouse") {
+        hero.style.setProperty("--px", ((pointer.x / width) * 2 - 1).toFixed(3));
+        hero.style.setProperty("--py", ((pointer.y / height) * 2 - 1).toFixed(3));
+      }
       kick();
     });
     hero.addEventListener("pointerleave", () => {
       pointer.active = false;
+      hero.style.setProperty("--px", "0");
+      hero.style.setProperty("--py", "0");
       kick();
     });
+    // Keep the field alive when nobody is touching it.
+    setInterval(() => {
+      if (!visible || document.hidden || pointer.active || ripples.length) return;
+      ripples.push({ x: width * (0.15 + Math.random() * 0.7), y: height * (0.15 + Math.random() * 0.6), t0: performance.now() });
+      kick();
+    }, 3600);
     hero.addEventListener("pointerdown", (e) => {
       if (e.target.closest("a, button")) return;
       ripple(e.clientX, e.clientY);
@@ -483,6 +616,10 @@ function initCards() {
       const r = card.getBoundingClientRect();
       card.style.setProperty("--mx", `${e.clientX - r.left}px`);
       card.style.setProperty("--my", `${e.clientY - r.top}px`);
+      if (e.pointerType !== "mouse" || !motionOK()) return;
+      const max = r.width > 500 ? 2.2 : 4;
+      card.style.setProperty("--ry", `${(((e.clientX - r.left) / r.width - 0.5) * 2 * max).toFixed(2)}deg`);
+      card.style.setProperty("--rx", `${(((e.clientY - r.top) / r.height - 0.5) * -2 * max).toFixed(2)}deg`);
     })
   );
   if (!motionOK()) return;
@@ -540,7 +677,8 @@ function initCounters() {
         if (!entry.isIntersecting) continue;
         io.unobserve(entry.target);
         const el = entry.target;
-        const to = Number(el.dataset.count);
+        const to = Number(el.dataset.count || el.textContent);
+        if (!Number.isFinite(to)) continue;
         const t0 = performance.now();
         const step = (now) => {
           const p = Math.min(1, (now - t0) / 1300);
@@ -623,6 +761,7 @@ function initTimeline() {
     it.el.addEventListener("pointerenter", () => highlight(true, true));
     it.el.addEventListener("pointerleave", () => highlight(false, true));
 
+    seg.style.setProperty("--n", String(segments.length));
     track.append(seg);
     segments.push(seg);
   }
@@ -727,6 +866,7 @@ function initPalette(agent) {
     { group: "Actions", label: "Copy email address", hint: EMAIL, icon: "i-copy", keys: "mail contact", run: () => copyEmail() },
     { group: "Actions", label: "Download resume", hint: "PDF", icon: "i-download", keys: "cv pdf", run: download },
     { group: "Actions", label: "Toggle dark mode", hint: "theme", icon: "i-moon", keys: "dark light theme", run: () => toggleTheme() },
+    { group: "Actions", label: "Throw confetti", hint: "↑↑↓↓←→←→BA", icon: "i-check", keys: "party celebrate fun easter egg konami", run: () => confetti.party() },
     { group: "Links", label: "GitHub", hint: "@ajmaln", icon: "i-github", keys: "code repos", run: openUrl("https://github.com/ajmaln") },
     { group: "Links", label: "LinkedIn", hint: "in/ajmaln", icon: "i-linkedin", keys: "profile", run: openUrl("https://www.linkedin.com/in/ajmaln") },
     { group: "Links", label: "Akai", hint: "akai.run", icon: "i-arrow-up-right", keys: "deel ai agents", run: openUrl("https://akai.run") },
@@ -865,6 +1005,8 @@ initDates();
 initTheme();
 initKeyHints();
 initCopy();
+initMarquee();
+initKonami();
 initNav();
 initReveal();
 initRoles();
@@ -881,6 +1023,7 @@ const agent = initAgent({
   copyText,
   setTheme,
   getTheme,
+  party: confetti.party,
   istTime,
   cvUrl: CV_URL,
   modKey: MOD_KEY,

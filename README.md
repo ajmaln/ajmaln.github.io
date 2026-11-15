@@ -8,7 +8,7 @@ It's plain HTML, CSS and vanilla JavaScript with no build step. Edit the files a
 index.html              page content (all copy lives here)
 404.html                not-found page
 assets/css/main.css     design tokens (light + dark) and all styles
-assets/js/main.js       theme, nav, ⌘K menu, hero dot field, timeline, cards
+assets/js/main.js       theme, nav, ⌘K menu, hero dot field, marquee, confetti, timeline, cards
 assets/js/agent.js      the scripted "Ask my agent" terminal and its answers
 assets/Ajmal_Noushad_CV.pdf
 assets/img/             photo, app icons and the social preview image (og.png)

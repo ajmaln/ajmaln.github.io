@@ -9,6 +9,7 @@ index.html              page content (all copy lives here)
 404.html                not-found page
 assets/css/main.css     design tokens (light + dark) and all styles
 assets/js/main.js       theme, nav, ⌘K menu, hero dot field, marquee, confetti, timeline, cards
+assets/js/game.js       Prompt Dash, the small 3D runner in the "Take a break" section
 assets/js/agent.js      the scripted "Ask my agent" terminal and its answers
 assets/Ajmal_Noushad_CV.pdf
 assets/img/             photo, app icons and the social preview image (og.png)

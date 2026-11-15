@@ -661,6 +661,7 @@ export function initAgent(ctx) {
           "  open github         also: linkedin, resume",
           "  theme [dark|light]  switch the colour theme",
           "  whoami              who's asking?",
+          "  play                a tiny 3D game",
           "  party               you'll see",
           "  clear               clear the conversation",
           "  sudo hire ajmal     you know you want to",
@@ -737,6 +738,12 @@ export function initAgent(ctx) {
         setChips([{ label: "Copy email", action: "copy" }, "What are you working on now?"]);
         return true;
       }
+      case "play":
+      case "game":
+        if (arg) return false;
+        addSys("Launching Prompt Dash…");
+        ctx.play?.();
+        return true;
       case "party":
       case "confetti":
       case "celebrate":

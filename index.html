@@ -93,6 +93,7 @@
         <a href="#work" data-nav-link="work">Work</a>
         <a href="#experience" data-nav-link="experience">Experience</a>
         <a href="#toolbox" data-nav-link="toolbox">Toolbox</a>
+        <a href="#play" data-nav-link="play">Play</a>
         <a href="#contact" data-nav-link="contact">Contact</a>
       </nav>
       <div class="nav__actions">
@@ -605,6 +606,36 @@
           </div>
           <div class="toolbox__view toolbox__view--json" data-toolbox-view="json" hidden>
             <pre class="code"><code data-toolbox-json></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── Play ───────────────────────── -->
+    <section class="section" id="play" aria-labelledby="play-title">
+      <div class="wrap">
+        <header class="section__head" data-reveal>
+          <p class="eyebrow">~/play</p>
+          <h2 class="section__title" id="play-title">Take a break</h2>
+          <p class="section__lede">Prompt Dash is a tiny 3D runner. Steer the prompt, grab tokens, dodge the bugs and jump the merge conflicts. It's drawn on a plain canvas with hand-rolled perspective and no libraries.</p>
+        </header>
+
+        <div class="game" data-game data-reveal>
+          <canvas class="game__canvas" tabindex="-1" role="img" aria-label="Prompt Dash, a 3D runner game"></canvas>
+          <div class="game__hud" aria-hidden="true">
+            <span>score <b data-game-score>0</b></span>
+            <span class="game__mult" data-game-mult>×1</span>
+            <span class="game__lives" data-game-lives></span>
+            <span>best <b data-game-best>0</b></span>
+          </div>
+          <div class="game__overlay" data-game-overlay role="status">
+            <p class="game__title" data-game-title>Prompt Dash</p>
+            <p class="game__msg" data-game-msg>Grab tokens to build a multiplier. Three bugs and the build is broken.</p>
+            <button class="btn game__btn" type="button" data-game-start>Play</button>
+            <p class="game__keys">
+              <span class="game__keys-desktop"><kbd class="kbd">←</kbd><kbd class="kbd">→</kbd> steer · <kbd class="kbd">space</kbd> jump · <kbd class="kbd">esc</kbd> pause</span>
+              <span class="game__keys-touch">Tap left or right to steer · tap the middle or swipe up to jump</span>
+            </p>
           </div>
         </div>
       </div>

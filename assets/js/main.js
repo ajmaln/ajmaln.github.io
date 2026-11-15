@@ -1,4 +1,5 @@
 import { initAgent, highlightJson } from "./agent.js";
+import { initGame } from "./game.js";
 
 const root = document.documentElement;
 const $ = (sel, scope = document) => scope.querySelector(sel);
@@ -862,6 +863,7 @@ function initPalette(agent) {
     { group: "Jump to", label: "Selected work", hint: "~/work", icon: "i-hash", keys: "projects akai neeto portfolio", run: scrollToId("work") },
     { group: "Jump to", label: "Experience", hint: "~/experience", icon: "i-hash", keys: "career timeline jobs deel bigbinary tcs education", run: scrollToId("experience") },
     { group: "Jump to", label: "Toolbox", hint: "~/toolbox", icon: "i-hash", keys: "skills stack tech", run: scrollToId("toolbox") },
+    { group: "Jump to", label: "Play Prompt Dash", hint: "~/play", icon: "i-hash", keys: "game 3d runner fun break arcade", run: () => playGame() },
     { group: "Jump to", label: "Contact", hint: "~/contact", icon: "i-hash", keys: "email hire reach", run: scrollToId("contact") },
     { group: "Actions", label: "Copy email address", hint: EMAIL, icon: "i-copy", keys: "mail contact", run: () => copyEmail() },
     { group: "Actions", label: "Download resume", hint: "PDF", icon: "i-download", keys: "cv pdf", run: download },
@@ -1018,12 +1020,25 @@ initTimeline();
 initToolbox();
 initClock();
 
+const game = initGame({
+  onRecord: (score) => {
+    confetti.party();
+    toast(`🎉 New best: ${score}`);
+  },
+});
+themeListeners.add(() => game.refreshColors?.());
+function playGame() {
+  document.getElementById("play")?.scrollIntoView({ behavior: motionOK() ? "smooth" : "auto" });
+  setTimeout(() => game.start(), motionOK() ? 700 : 0);
+}
+
 const agent = initAgent({
   toast,
   copyText,
   setTheme,
   getTheme,
   party: confetti.party,
+  play: playGame,
   istTime,
   cvUrl: CV_URL,
   modKey: MOD_KEY,
